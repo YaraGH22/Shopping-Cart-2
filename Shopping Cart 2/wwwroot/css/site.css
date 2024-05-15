@@ -35,3 +35,11 @@ footer {
     left: 0;
     width: 100%;
 }
+
+
+/* Start Custom Styles */
+.cover-preview {
+    max-height: 500px;
+    border-radius: 8px;
+}
+/* End Custom Styles */

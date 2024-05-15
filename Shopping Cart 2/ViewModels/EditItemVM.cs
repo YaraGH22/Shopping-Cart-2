@@ -5,11 +5,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shopping_Cart_2.ViewModels
 {
-    public class CreateItemVM : BaseItemVM
+    public class EditItemVM : BaseItemVM
     {
-       
+        public int Id { get; set; }
+
+        public string? CurrentCover { get; set; }
+
         [AllowedExtensions(FileSettings.AllowedExtensions)]
         [MaxFileSize(FileSettings.MaxFileSizeInBytes)]
-        public IFormFile Cover { get; set; } = default!;
+        public IFormFile? Cover { get; set; } = default!;
+
+        
+
     }
 }

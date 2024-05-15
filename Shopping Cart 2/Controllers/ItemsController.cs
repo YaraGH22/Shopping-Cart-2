@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shopping_Cart_2.Services;
 using Shopping_Cart_2.ViewModels;
 
@@ -16,7 +17,14 @@ namespace Shopping_Cart_2.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var items=_itemService.GetAll();
+            return View(items);
+        }
+        public IActionResult Details(int id)
+        {
+            var item =_itemService.GetById(id);
+            if (item is null) return NotFound();
+            return View(item);
         }
 
         [HttpGet]
@@ -38,6 +46,38 @@ namespace Shopping_Cart_2.Controllers
             }
             await _itemService.Create(model);
             return RedirectToAction ("Index");
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var item = _itemService.GetById(id);
+            if (item is null) return NotFound();
+
+            EditItemVM model = new()
+            {
+                Id = id,
+                Name = item.Name,
+                Description = item.Description,
+                CategoryId = item.CategoryId,
+                Price = item.Price,
+                Categories = _categoryService.GetSelectList(),
+                CurrentCover = item.Cover,
+
+            };
+            return View(model);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditItemVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var item =await _itemService.Update(model);
+            if (item is null) return BadRequest();
+            return RedirectToAction("Index");
         }
     }
 }

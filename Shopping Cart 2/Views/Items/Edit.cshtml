@@ -1,13 +1,14 @@
 ﻿@using Shopping_Cart_2.Sittings
-@model CreateItemVM
+@model EditItemVM
+
 
 @{
-    ViewData["Titles"] = "Add Item";
+    ViewData["Titles"] = "Edit Item";
 }
 
 <h5>
     <i class="bi bi-plus-circle-dotted"></i>
-    Add a new Item
+    Edit Item
 </h5>
 
 <form asp-controller="Items" enctype="multipart/form-data">
@@ -31,7 +32,7 @@
                 <input type="number" class="form-control" asp-for="Price" placeholder="Price">
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
-           
+
             <div class="form-group">
                 <label asp-for="Description" class="form-label mt-4"></label>
                 <textarea asp-for="Description" class="form-control" placeholder="type description . . ."></textarea>
@@ -44,14 +45,15 @@
                        data-msg-extension="Not allowed extension"
                        data-rule-filesize="@FileSettings.MaxFileSizeInBytes"
                        data-msg-filesize="Maximum allowed size is @FileSettings.MaxFileSizeInMB MB" />
-               
+
                 <small class="form-text text-muted">Only @FileSettings.AllowedExtensions files are allowed with max size @(FileSettings.MaxFileSizeInMB)MB.</small>
                 <span asp-validation-for="Cover" class="text-danger d-block"></span>
             </div>
             <button type="submit" class="btn btn-light text-black mt-4">Save</button>
         </div>
         <div class="col-md-6 d-flex justify-content-center pt-4 overflow-hidden">
-            <img class="cover-preview d-none" alt="Cover" />
+            <img src="@($"{FileSettings.ImagesPath}/{Model.CurrentCover}")" 
+                 class="cover-preview " alt="Cover" />
         </div>
 </form>
 
@@ -59,5 +61,5 @@
     <partial name="_ValidationScriptsPartial" />
     <script src="~/js/filesize-validator.js " asp-append-version="true"></script>
     <script src="~/js/item-form.js" asp-append-version="true"></script>
-    
+
 }
