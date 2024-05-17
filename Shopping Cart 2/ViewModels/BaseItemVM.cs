@@ -7,7 +7,7 @@ namespace Shopping_Cart_2.ViewModels
     {
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; } = string.Empty;
-        public decimal Price { get; set; } = 0;
+        public double Price { get; set; } = 0;
        
         [Display(Name = "Category")]
         // to fill drop down list in view (category)

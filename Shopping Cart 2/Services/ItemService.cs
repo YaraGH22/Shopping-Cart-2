@@ -1,4 +1,5 @@
 ﻿using Humanizer;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Shopping_Cart_2.Data;
 using Shopping_Cart_2.Models;
@@ -32,7 +33,6 @@ namespace Shopping_Cart_2.Services
         public IEnumerable<Item> GetAll()
         {
             var Item = _context.items.Include(x => x.Category)
-                                     .Include(x => x.Orders)
                                      .AsNoTracking()
                                      .ToList();
             return Item;
@@ -41,7 +41,7 @@ namespace Shopping_Cart_2.Services
         public Item? GetById(int id)
         {
             var Item = _context.items.Include(x => x.Category)
-                                     .Include(x => x.Orders)
+                                     //.Include(x => x.Orders)
                                      .AsNoTracking()
                                      .SingleOrDefault(g => g.Id == id);
             return Item;
@@ -67,8 +67,9 @@ namespace Shopping_Cart_2.Services
 
         public async Task<Item?> Update(EditItemVM vmItem)
         {
+            // 4-  خدمة تعديل تجلب غرض اساسي من داتاسيت 
+            // ثم تسند (البارمتر) الغرض الوسيط الى الاساسي 
             var item = await _context.items.Include(g => g.Category)
-                                           .Include(g => g.Orders)
                                            .SingleOrDefaultAsync(g => g.Id == vmItem.Id);
             if (item == null) return null;
 
@@ -103,6 +104,30 @@ namespace Shopping_Cart_2.Services
                 File.Delete(cover);
                 return null;
             }
+        }
+
+        public bool Delete(int id)
+        {
+
+            var isDeleted = false;
+
+            var item = _context.items.Find(id);
+
+            if (item is null)
+                return isDeleted;
+
+            _context.Remove(item);
+            var effectedRows = _context.SaveChanges();
+
+            if (effectedRows > 0)
+            {
+                isDeleted = true;
+
+                var cover = Path.Combine(_imagesPath, item.Cover);
+                File.Delete(cover);
+            }
+
+            return isDeleted;
         }
     }
 }

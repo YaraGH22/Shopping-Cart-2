@@ -9,6 +9,7 @@ namespace Shopping_Cart_2.Services
         Item? GetById(int id);
         Task Create (CreateItemVM vmItem);
         Task<Item?> Update (EditItemVM vmItem);
+        bool Delete (int id);
         
     }
 }

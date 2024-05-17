@@ -7,6 +7,8 @@ namespace Shopping_Cart_2.ViewModels
 {
     public class EditItemVM : BaseItemVM
     {
+        // 2- انشاء مودل وسيط dto
+        //يستقبل القيم من فيو ويسندها للغرض الاساسي
         public int Id { get; set; }
 
         public string? CurrentCover { get; set; }

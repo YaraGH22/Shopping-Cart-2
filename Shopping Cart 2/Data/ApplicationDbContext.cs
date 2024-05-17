@@ -13,23 +13,27 @@ namespace Shopping_Cart_2.Data
         }
         public DbSet<Category> categories { get; set; }
         public DbSet<Item> items { get; set; }
-        public DbSet<Order> orders { get; set; }
-        public DbSet<OrderItem> ordersItems { get; set; }
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            builder.Entity<OrderItem>()
-           .HasKey(e => new { e.OrderId,e.ItemId  });
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<CartDetail> CartDetails { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
-            builder.Entity<OrderItem>()
-            .HasOne<Item>(sc => sc.Item)
-            .WithMany(s => s.Orders)
-            .HasForeignKey(sc => sc.ItemId);
+        public DbSet<OrderStatus> orderStatuses { get; set; }
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    base.OnModelCreating(builder);
+        //    builder.Entity<OrderItem>()
+        //   .HasKey(e => new { e.OrderId,e.ItemId  });
 
-            builder.Entity<OrderItem>()
-                .HasOne<Order>(sc => sc.Order)
-                .WithMany(c => c.Items)
-                .HasForeignKey(sc => sc.OrderId);
-        }
+        //    builder.Entity<OrderItem>()
+        //    .HasOne<Item>(sc => sc.Item)
+        //    .WithMany(s => s.Orders)
+        //    .HasForeignKey(sc => sc.ItemId);
+
+        //    builder.Entity<OrderItem>()
+        //        .HasOne<Order>(sc => sc.Order)
+        //        .WithMany(c => c.Items)
+        //        .HasForeignKey(sc => sc.OrderId);
+        //}
     }
 }
