@@ -14,12 +14,20 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services
+    .AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
-
+// Uncomment it when you run the project first time, It will registered an admin
+//using (var scope = app.Services.CreateScope())
+//{
+//    await DbSeeder.SeedDefaultData(scope.ServiceProvider);
+//}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

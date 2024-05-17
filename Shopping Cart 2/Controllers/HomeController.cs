@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Shopping_Cart_2.Data;
 using Shopping_Cart_2.Models;
+using Shopping_Cart_2.Services;
 using System.Diagnostics;
 
 namespace Shopping_Cart_2.Controllers
@@ -7,15 +10,26 @@ namespace Shopping_Cart_2.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ApplicationDbContext _context;
+        private readonly IItemService _itemService;
+        public HomeController(ILogger<HomeController> logger, IItemService itemService = null)
         {
             _logger = logger;
+            _itemService = itemService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string? seachName)
         {
-            return View();
+            var games = _itemService.GetAll();
+            //Searching
+            if (!string.IsNullOrEmpty(seachName))
+            {
+                games = games.Where(g => g.Name.ToLower().Contains(seachName.ToLower())
+                    || g.Description.ToLower().Contains(seachName.ToLower())).ToList();
+            }
+            
+            
+            return View(games);
         }
 
         public IActionResult Privacy()

@@ -11,6 +11,7 @@ namespace Shopping_Cart_2.Models
         public string? Description { get; set; } = string.Empty;
         public double Price { get; set; } = 0;
         public string Cover {  get; set; } = string.Empty;
+        public int Quantity { get; set; }
 
         //for M -> 1 items -> category  
         [ForeignKey(nameof(Category))]
