@@ -12,13 +12,14 @@ namespace Shopping_Cart_2.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly IItemService _itemService;
-        public HomeController(ILogger<HomeController> logger, IItemService itemService = null)
+        public HomeController(ILogger<HomeController> logger, IItemService itemService, ApplicationDbContext context )
         {
             _logger = logger;
             _itemService = itemService;
+            _context = context;
         }
 
-        public async Task<IActionResult> Index(string? seachName)
+        public async Task<IActionResult> Index(string? seachName, string? categoryName)
         {
             var item = _itemService.GetAll();
             //Searching
@@ -27,8 +28,14 @@ namespace Shopping_Cart_2.Controllers
                 item = item.Where(g => g.Name.ToLower().Contains(seachName.ToLower())
                     || g.Description.ToLower().Contains(seachName.ToLower())).ToList();
             }
-            
-            
+             
+            //Filtering
+            else if (categoryName != null)
+            {
+                item = item.Where(g => g.Category.Name.ToLower() == categoryName.ToLower()).ToList();
+            }
+            ViewBag.seachName = seachName;
+            ViewBag.categories = _context.categories.ToList();
             return View(item);
         }
 

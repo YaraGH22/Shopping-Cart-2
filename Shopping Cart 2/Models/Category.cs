@@ -10,7 +10,7 @@ namespace Shopping_Cart_2.Models
         public string Name { get; set; } = string.Empty;
 
         //for 1 -> M  category -> items
-        public ICollection<Item> Items { get; set; }=new List<Item>();
+        public ICollection<Item?> Items { get; set; }=new List<Item>();
 
     }
 }
