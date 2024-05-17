@@ -9,7 +9,7 @@ namespace Shopping_Cart_2.Models
         public int Id { get; set; }
         [Required]
         public int OrderId { get; set; }
-        public Order Order { get; set; } = default!;
+        public Order Order { get; set; } 
         [Required]
         public int ItemId { get; set; }
         public Item Item { get; set; } = default!;

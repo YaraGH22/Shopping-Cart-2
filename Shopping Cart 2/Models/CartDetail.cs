@@ -14,7 +14,7 @@ namespace Shopping_Cart_2.Models
         public ShoppingCart ShoppingCart { get; set; } = default!;
         public int Quantity { get; set; }
         [Required]
-        public double UnitPrice { get; set; }
+        public double UnitPrice { get; set; } 
 
 
     }
