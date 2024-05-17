@@ -20,16 +20,16 @@ namespace Shopping_Cart_2.Controllers
 
         public async Task<IActionResult> Index(string? seachName)
         {
-            var games = _itemService.GetAll();
+            var item = _itemService.GetAll();
             //Searching
             if (!string.IsNullOrEmpty(seachName))
             {
-                games = games.Where(g => g.Name.ToLower().Contains(seachName.ToLower())
+                item = item.Where(g => g.Name.ToLower().Contains(seachName.ToLower())
                     || g.Description.ToLower().Contains(seachName.ToLower())).ToList();
             }
             
             
-            return View(games);
+            return View(item);
         }
 
         public IActionResult Privacy()
