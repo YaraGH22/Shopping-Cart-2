@@ -118,6 +118,17 @@ namespace Shopping_Cart_2.Services
             catch (Exception ex) { return false; }
 
         }
-
+        public async Task<ShoppingCart> GetUserCart()
+        {
+            var userId = GetUserId();
+            if (userId == null)
+                throw new InvalidOperationException("Invalid userid");
+            var shoppingCart = await _db.ShoppingCarts
+                                  .Include(a => a.CartDetails)
+                                  .ThenInclude(a => a.Item)
+                                  .ThenInclude(a => a.Category)
+                                  .Where(a => a.UserId == userId).FirstOrDefaultAsync();
+            return shoppingCart;
+        }
     }
 }

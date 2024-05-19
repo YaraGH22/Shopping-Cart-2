@@ -7,5 +7,6 @@ namespace Shopping_Cart_2.Services
         Task<ShoppingCart> GetCart(string userId);
         Task<bool> AddItem(int bookId, int qty);
         Task<bool> RemoveItem(int bookId);
+        Task<ShoppingCart> GetUserCart();
     }
 }

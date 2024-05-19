@@ -13,6 +13,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 builder.Services
     .AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
