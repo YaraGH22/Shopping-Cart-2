@@ -35,16 +35,17 @@ namespace Shopping_Cart_2.Services
             var cart = await _db.ShoppingCarts.FirstOrDefaultAsync(x => x.UserId == userId);
             return cart;
         }
-        public async Task<bool> AddItem(int itmId, int qty)
+        public async Task<int> AddItem(int itmId, int qty)
         {
             //userId => ShCart => cartDItem
 
             // begin Transaction
             using var transaction = _db.Database.BeginTransaction();
+            string userId = GetUserId();
             try
             {
                 // الحصول على 1 id المستخدم  
-                string userId = GetUserId();
+                
                 if (string.IsNullOrEmpty(userId))
                 {
                     throw new UnauthorizedAccessException("user is not logged-in");
@@ -87,12 +88,14 @@ namespace Shopping_Cart_2.Services
                 }
                 await _db.SaveChangesAsync();
                 transaction.Commit();
-                return true;
+                
             }
-            catch (Exception ex) { return false; }
-             
+            catch (Exception ex) { ; }
+            var cartItemCount = await GetCartItemCount(userId);
+            return cartItemCount;
+
         }
-        public async Task<bool> RemoveItem(int itmId)
+        public async Task<int> RemoveItem(int itmId)
         {
             
             string userId = GetUserId();
@@ -113,13 +116,14 @@ namespace Shopping_Cart_2.Services
                 else
                     cartDItem.Quantity = cartDItem.Quantity - 1;
                 _db.SaveChanges();
-                return true;
+                 
             }
-            catch (Exception ex) { return false; }
-
+            catch (Exception ex) {   }
+            var cartItemCount = await GetCartItemCount(userId);
+            return cartItemCount;
         }
         public async Task<ShoppingCart> GetUserCart()
-        {
+        { // للحصول على كل عناصر الكارت الواحد مع ارتباطاتها في الجداول المرتبطة بها
             var userId = GetUserId();
             if (userId == null)
                 throw new InvalidOperationException("Invalid userid");
@@ -129,6 +133,23 @@ namespace Shopping_Cart_2.Services
                                   .ThenInclude(a => a.Category)
                                   .Where(a => a.UserId == userId).FirstOrDefaultAsync();
             return shoppingCart;
+        }
+        public async Task<int> GetCartItemCount(string userId = "")
+        { // لمعرفة عدد العناصر في كل كارت
+            if (string.IsNullOrEmpty(userId)) // updated line
+            {
+                userId = GetUserId();
+            }
+            //var data = _db.ShoppingCarts.Include(a => a.CartDetails)
+            //                            .Where(a => a.UserId == userId)
+            //                            .ToListAsync();
+            var data = await (from cart in _db.ShoppingCarts
+                              join cartDetail in _db.CartDetails
+                              on cart.Id equals cartDetail.ShoppingCartId
+                              where cart.UserId == userId // updated line
+                              select new { cartDetail.Id }
+                        ).ToListAsync();
+            return data.Count;
         }
     }
 }
