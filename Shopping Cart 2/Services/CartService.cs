@@ -92,7 +92,32 @@ namespace Shopping_Cart_2.Services
             catch (Exception ex) { return false; }
              
         }
+        public async Task<bool> RemoveItem(int itmId)
+        {
+            
+            string userId = GetUserId();
+            try
+            {
+                if (string.IsNullOrEmpty(userId))
+                    throw new UnauthorizedAccessException("user is not logged-in");
+                var ShCart = await GetCart(userId);
+                if (ShCart is null)
+                    throw new InvalidOperationException("Invalid cart");
+                // cart detail section
+                var cartDItem = _db.CartDetails
+                                  .FirstOrDefault(a => a.ShoppingCartId == ShCart.Id && a.ItemId == itmId);
+                if (cartDItem is null)
+                    throw new InvalidOperationException("Not items in cart");
+                else if (cartDItem.Quantity == 1)
+                    _db.CartDetails.Remove(cartDItem);
+                else
+                    cartDItem.Quantity = cartDItem.Quantity - 1;
+                _db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex) { return false; }
 
-        
+        }
+
     }
 }
