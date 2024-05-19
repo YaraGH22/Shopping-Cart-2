@@ -7,6 +7,7 @@ namespace Shopping_Cart_2.Models
     {
 
         public int Id { get; set; }
+        [Required]
         public string UserId { get; set; }=string.Empty;
         public bool IsDeleted { get; set; } = false;
         public ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
