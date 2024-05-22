@@ -57,7 +57,25 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
     <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
-    
+    <script>
+        loadCartCount();
+        async function loadCartCount() {
+            try {
+                var response = await fetch(`/Cart/GetTotalItemInCart`);
+                console.log(response)
+                if (response.status == 200) {
+                    var result = await response.json();
+                    var cartCountEl = document.getElementById("cartCount");
+                    cartCountEl.innerHTML = result;
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+    </script>
+
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

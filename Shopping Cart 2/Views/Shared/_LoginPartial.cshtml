@@ -3,10 +3,16 @@
 @inject UserManager<IdentityUser> UserManager
 
 <ul class="navbar-nav">
+    <li class="nav-item">
+        <a class="nav-link" href="/Cart/GetUserCart">
+            <span id="cartCount" class="badge text-bg-info">0</span>
+            <i class="bi bi-cart text-white"></i>
+        </a>
+    </li>
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello <span> @User.Identity?.Name! </span></a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello <span id="username"> @User.Identity?.Name! </span></a>
             @if (User.IsInRole("Admin"))
             {
                 <span>(Admin)</span>

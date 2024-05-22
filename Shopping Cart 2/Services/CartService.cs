@@ -38,10 +38,10 @@ namespace Shopping_Cart_2.Services
         public async Task<int> AddItem(int itmId, int qty)
         {
             //userId => ShCart => cartDItem
-
+            string userId = GetUserId();
             // begin Transaction
             using var transaction = _db.Database.BeginTransaction();
-            string userId = GetUserId();
+            
             try
             {
                 // الحصول على 1 id المستخدم  
@@ -61,7 +61,7 @@ namespace Shopping_Cart_2.Services
                     };
                     await _db.ShoppingCarts.AddAsync(ShCart);
                 }
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
 
                 //-3-  جبلي تفااااااصيل السلة يلي
                 //الايدي تبعها يساوي ايدي سلة المستخدم الحالي
@@ -72,6 +72,7 @@ namespace Shopping_Cart_2.Services
                 if (cartDItem is not null)
                 {
                     cartDItem.Quantity += qty;
+                    await _db.SaveChangesAsync();
                 }
                 else
                 {
@@ -90,7 +91,7 @@ namespace Shopping_Cart_2.Services
                 transaction.Commit();
                 
             }
-            catch (Exception ex) { ; }
+            catch (Exception ex) {  }
             var cartItemCount = await GetCartItemCount(userId);
             return cartItemCount;
 
@@ -131,7 +132,8 @@ namespace Shopping_Cart_2.Services
                                   .Include(a => a.CartDetails)
                                   .ThenInclude(a => a.Item)
                                   .ThenInclude(a => a.Category)
-                                  .Where(a => a.UserId == userId).FirstOrDefaultAsync();
+                                  .Where(a => a.UserId == userId)
+                                  .FirstOrDefaultAsync();
             return shoppingCart;
         }
         public async Task<int> GetCartItemCount(string userId = "")
@@ -140,16 +142,16 @@ namespace Shopping_Cart_2.Services
             {
                 userId = GetUserId();
             }
-            //var data = _db.ShoppingCarts.Include(a => a.CartDetails)
-            //                            .Where(a => a.UserId == userId)
-            //                            .ToListAsync();
-            var data = await (from cart in _db.ShoppingCarts
-                              join cartDetail in _db.CartDetails
-                              on cart.Id equals cartDetail.ShoppingCartId
-                              where cart.UserId == userId // updated line
-                              select new { cartDetail.Id }
-                        ).ToListAsync();
-            return data.Count;
+            //var data = await (_db.ShoppingCarts.Include(a => a.CartDetails)
+            //                             .ThenInclude(b => b.Quantity)
+            //                            .Where(a => a.UserId == userId))
+            //                            .SumAsync();
+            var totalQuantity = await (from cart in _db.ShoppingCarts
+                                       join cartDetail in _db.CartDetails
+                                       on cart.Id equals cartDetail.ShoppingCartId
+                                       where cart.UserId == userId
+                                       select cartDetail.Quantity  ).SumAsync();
+            return totalQuantity;
         }
     }
 }

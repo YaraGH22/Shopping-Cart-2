@@ -68,5 +68,27 @@ else
             </div>
         }
     </div>
-
 }
+@section Scripts{
+    <script>
+        async function add(itemId) {
+            var usernameEl = document.getElementById("username");
+            if (usernameEl == null) {
+                window.location.href = "/Identity/Account/Login";
+                
+            }
+            try {
+                var response = await fetch(`/Cart/AddItem?itemId=${itemId}`);
+                if (response.status == 200) {
+                    var result = await response.json();
+                    var cartCountEl = document.getElementById("cartCount");
+                    cartCountEl.innerHTML = result;
+                    window.location.href = "#cartCount";
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+    </script>
+    }

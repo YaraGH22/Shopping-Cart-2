@@ -8,7 +8,9 @@ namespace Shopping_Cart_2.ViewModels
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; } = string.Empty;
         public double Price { get; set; } = 0;
-       
+
+        public int Quantity { get; set; }
+
         [Display(Name = "Category")]
         // to fill drop down list in view (category)
         public int CategoryId { get; set; } = 0; // asp-for

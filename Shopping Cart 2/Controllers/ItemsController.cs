@@ -64,6 +64,7 @@ namespace Shopping_Cart_2.Controllers
                 Price = item.Price,
                 Categories = _categoryService.GetSelectList(),
                 CurrentCover = item.Cover,
+                Quantity= item.Quantity,
 
             };
             return View(model);
