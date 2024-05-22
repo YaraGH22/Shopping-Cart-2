@@ -37,5 +37,13 @@ namespace Shopping_Cart_2.Controllers
             int cartItem = await _cartService.GetCartItemCount();
             return Ok(cartItem);
         }
+
+        public async Task<IActionResult> Checkout( )
+        {
+            bool isCheckedOut = await _cartService.DoCheckout();
+            if (!isCheckedOut)
+                throw new Exception("some thing happen in server side");
+            return RedirectToAction("Index","Home");
+        }
     }
 }
