@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Order>
+
+@* this page appears in Account Page so we add nav link in  "/Areas/Identity/Pages/Account/Manage/ManageNav"  *@
+
+@{
+}
+<div style="width:100%" class="mt-2">
+    <a href="/Identity/Account/Manage" class="btn btn-primary my-2">Back</a>
+
+    <h4>My Orders</h4>
+    @if (Model != null && Model.Count() > 0)
+    {
+        <table class="table table-striped">
+            <tr>
+                <th>OrderDate</th>
+                <th>OrderStatus</th>
+                <th></th>
+            </tr>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.CreateDate.ToString("dd-MM-yyyy")</td>
+                    <td>@order.OrderStatus.StatusName</td>
+                    <td> <a   class="btn btn-primary my-2" asp-action="GetDetails" > Details </a> </td>
+                </tr>
+                <tr>
+                    <td>
+                        Total:
+                    </td>
+                    <td>
+                        @(order.OrderDetail.Select(item => item.Item.Price * item.Quantity).Sum())
+
+                    </td>
+                </tr>
+               @*  @if (order.OrderDetail != null && order.OrderDetail.Count > 0)
+                {
+                    <tr>
+                        <td>
+                            <table class="table table-striped">
+                                
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Image</th>
+                                    <th>Category</th>
+                                    <th>Unit Price(INR)</th>
+                                    <th>Total Price</th>
+                                </tr>
+                                @foreach (var o in order.OrderDetail)
+                                {
+                                    <tr>
+                                        <td>@o.Item.Name</td>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(o.Item.Cover))
+                                            {
+                                                <img src="/assets/images/NoImage.png" style="width:80px;height:100px" />
+                                            }
+                                            else
+                                            {
+                                                <img src="/assets/images/items/@o.Item.Cover" style="width:80px;height:100px" />
+                                            }
+                                        </td>
+                                        <td>@o.Item.Category.Name</td>
+                                        <td>@o.Item.Price X @o.Quantity</td>
+                                        <td>@(o.Item.Price * o.Quantity) </td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+                } *@
+            }
+        </table>
+
+    }
+    else
+    {
+        <h5>No orders</h5>
+    }
+</div>

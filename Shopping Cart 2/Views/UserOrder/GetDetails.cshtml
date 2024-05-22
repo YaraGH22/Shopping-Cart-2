@@ -1,0 +1,48 @@
+﻿@* @model IEnumerable< OrderDetail>
+@{
+    ViewData["Title"] = "GetDetails";
+}
+
+<h1>GetDetails</h1>
+
+<div style="width:100%" class="mt-2"> 
+        <table class="table table-striped">
+            
+            
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Image</th>
+                                    <th>Category</th>
+                                    <th>Unit Price(INR)</th>
+                                    <th>Total Price</th>
+                                </tr>
+                                @foreach (var o in Model)
+                                {
+                                    <tr>
+                                        <td>@o.Item.Name</td>
+                                        <td>
+                                            @if (string.IsNullOrEmpty(o.Item.Cover))
+                                            {
+                                                <img src="/assets/images/NoImage.png" style="width:80px;height:100px" />
+                                            }
+                                            else
+                                            {
+                                                <img src="/assets/images/items/@o.Item.Cover" style="width:80px;height:100px" />
+                                            }
+                                        </td>
+                                        <td>@o.Item.Category.Name</td>
+                                        <td>@o.Item.Price X @o.Quantity</td>
+                                        <td>@(o.Item.Price * o.Quantity) </td>
+                                    </tr>
+                                }
+                            
+                         
+                    
+                }
+            }
+        </table>
+
+    
+     
+</div>
+  *@

@@ -14,6 +14,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IItemService, ItemService>();
 builder.Services.AddTransient<ICartService, CartService>();
+builder.Services.AddTransient<IUserOrderService, UserOrderService>();
 
 builder.Services
     .AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
