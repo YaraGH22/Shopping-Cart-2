@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shopping_Cart_2.Models;
 using Shopping_Cart_2.Services;
 
 namespace Shopping_Cart_2.Controllers
@@ -17,9 +18,12 @@ namespace Shopping_Cart_2.Controllers
             var orders = await _userOrderService.UserOrders();
             return View(orders);
         }
-        public async Task<IActionResult> GetDetails()
+         
+        public async Task<IActionResult> GetDetail(int orderId)
         {
-            return View();
+            var detail =await _userOrderService.GetOrderDetail(orderId);
+            return View(detail);
         }
+        
     }
 }

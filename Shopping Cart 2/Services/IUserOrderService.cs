@@ -6,5 +6,6 @@ namespace Shopping_Cart_2.Services
     {
         
         Task<IEnumerable<Order>> UserOrders();
+        Task<Order> GetOrderDetail(int orderId);
     }
 }

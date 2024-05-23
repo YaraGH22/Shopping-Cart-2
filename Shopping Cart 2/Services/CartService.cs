@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Shopping_Cart_2.Constants;
 using Shopping_Cart_2.Data;
 using Shopping_Cart_2.Models;
 using System.Net;
@@ -145,8 +146,10 @@ namespace Shopping_Cart_2.Services
             }
             //var data = await (_db.ShoppingCarts.Include(a => a.CartDetails)
             //                             .ThenInclude(b => b.Quantity)
-            //                            .Where(a => a.UserId == userId))
-            //                            .SumAsync();
+            ////                            .Where(a => a.UserId == userId);
+            //var sh =await _db.ShoppingCarts.SingleOrDefaultAsync(x=>x.UserId==userId);
+            //var data = await  _db.CartDetails.Select(x=>x.ShoppingCartId == sh.Id ).ToListAsync() ;
+            
             var totalQuantity = await (from cart in _db.ShoppingCarts
                                        join cartDetail in _db.CartDetails
                                        on cart.Id equals cartDetail.ShoppingCartId
@@ -187,7 +190,7 @@ namespace Shopping_Cart_2.Services
                 {
                     UserId = userId,
                     CreateDate = DateTime.UtcNow,
-                    OrderStatusId = 1, // pindding
+                    OrderStatusId = pendingRecord.Id, // pindding
                     Name = model.Name,
                     Email = model.Email,
                     MobileNumber = model.MobileNumber,

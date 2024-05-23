@@ -39,5 +39,18 @@ namespace Shopping_Cart_2.Services
 
             return orders;
         }
+        public async Task<Order> GetOrderDetail(int orderId)
+        {
+            var userId = GetUserId();
+            if (string.IsNullOrEmpty(userId))
+                throw new Exception("User is not logged-in");
+            var order = await _db.Orders.Include(x => x.OrderStatus)
+                           .Include(x => x.OrderDetail)
+                           .ThenInclude(x => x.Item)
+                           .ThenInclude(x => x.Category)
+                           .Where(a => a.UserId == userId)
+                           .SingleOrDefaultAsync(x => x.Id == orderId);
+            return order;
+        }
     }
 }
