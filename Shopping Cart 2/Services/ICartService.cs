@@ -1,4 +1,5 @@
-﻿using Shopping_Cart_2.Models;
+﻿
+
 
 namespace Shopping_Cart_2.Services
 {
@@ -9,6 +10,6 @@ namespace Shopping_Cart_2.Services
         Task<int> RemoveItem(int bookId);
         Task<ShoppingCart> GetUserCart();
         Task<int> GetCartItemCount(string userId = "");
-        Task<bool>  DoCheckout( );
+        Task<bool>  DoCheckout(CheckoutModel model);
     }
 }

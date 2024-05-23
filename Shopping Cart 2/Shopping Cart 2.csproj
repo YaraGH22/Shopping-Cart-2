@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\UserOrder\GetDetails.cshtml" />
     <Content Remove="wwwroot\js\item-delete.js" />
   </ItemGroup>
 

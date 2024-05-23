@@ -154,7 +154,7 @@ namespace Shopping_Cart_2.Services
                                        select cartDetail.Quantity).SumAsync();
             return totalQuantity;
         }
-        public async Task<bool> DoCheckout()
+        public async Task<bool> DoCheckout(CheckoutModel model)
         {
             using var transaction = _db.Database.BeginTransaction();
             try
@@ -176,13 +176,24 @@ namespace Shopping_Cart_2.Services
                                     .Where(a => a.ShoppingCartId == ShCart.Id).ToList();
                 if (cartDetail.Count == 0)
                     throw new InvalidOperationException("Cart is empty");
+                //check pending state
+                var pendingRecord = _db.orderStatuses.FirstOrDefault(s => s.StatusName == "Pending");
+                if (pendingRecord is null)
+                    throw new InvalidOperationException("Order status does not have Pending status");
+
 
                 //4- create new order and add it to dataset
                 Order order = new Order
                 {
                     UserId = userId,
                     CreateDate = DateTime.UtcNow,
-                    OrderStatusId = 1 // pindding
+                    OrderStatusId = 1, // pindding
+                    Name = model.Name,
+                    Email = model.Email,
+                    MobileNumber = model.MobileNumber,
+                    PaymentMethod = model.PaymentMethod,
+                    Address = model.Address,
+                    IsPaid = false
 
                 };
                 await _db.Orders.AddAsync(order);
