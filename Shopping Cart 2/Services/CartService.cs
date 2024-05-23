@@ -143,19 +143,16 @@ namespace Shopping_Cart_2.Services
             if (string.IsNullOrEmpty(userId)) // updated line
             {
                 userId = GetUserId();
-            }
-            //var data = await (_db.ShoppingCarts.Include(a => a.CartDetails)
-            //                             .ThenInclude(b => b.Quantity)
-            ////                            .Where(a => a.UserId == userId);
-            //var sh =await _db.ShoppingCarts.SingleOrDefaultAsync(x=>x.UserId==userId);
-            //var data = await  _db.CartDetails.Select(x=>x.ShoppingCartId == sh.Id ).ToListAsync() ;
-            
-            var totalQuantity = await (from cart in _db.ShoppingCarts
-                                       join cartDetail in _db.CartDetails
-                                       on cart.Id equals cartDetail.ShoppingCartId
-                                       where cart.UserId == userId
-                                       select cartDetail.Quantity).SumAsync();
-            return totalQuantity;
+            } 
+            var sh = await _db.ShoppingCarts.Include(x=>x.CartDetails).SingleOrDefaultAsync(x => x.UserId == userId);
+            var data = sh.CartDetails.Sum(x => x.Quantity);
+
+            //var totalQuantity = await (from cart in _db.ShoppingCarts
+            //                           join cartDetail in _db.CartDetails
+            //                           on cart.Id equals cartDetail.ShoppingCartId
+            //                           where cart.UserId == userId
+            //                           select cartDetail.Quantity).SumAsync();
+            return data;
         }
         public async Task<bool> DoCheckout(CheckoutModel model)
         {
