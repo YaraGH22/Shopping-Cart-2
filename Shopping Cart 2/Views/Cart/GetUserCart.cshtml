@@ -36,7 +36,14 @@
                     <td>@(i.Item.Price * i.Quantity)</td>
                     <td>
                         @* Increase Quantity button *@
-                        <a class="btn btn-info" href="/Cart/AddItem?itemId=@i.ItemId&&redirect=1">+</a>
+                        @if (i.Quantity < i.Item.Stock.Quantity)
+                        {
+                            <a class="btn btn-info" href="/Cart/AddItem?itemId=@i.ItemId&&redirect=1">+</a>
+                        }
+                        else
+                        {
+                            <span style="border: 1px solid;padding: 8px 8px;color: red;border-radius: 5px;margin-right:4px">Out of stock </span>
+                        }
                         @* Decrement button *@
                         <a class="btn btn-info" href="/Cart/RemoveItem?itemId=@i.ItemId">-</a>
 

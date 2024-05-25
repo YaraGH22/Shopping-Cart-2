@@ -1,0 +1,38 @@
+﻿@model IEnumerable<StockDisplayModel>
+@{
+     
+}
+<h2>Stocks</h2>
+ 
+<table class="table table-bordered" id="example">
+    <thead>
+            <tr>
+              <th>Book</th>
+              <th>Stock</th>
+              <th>Actions</th>
+            </tr>
+  </thead>
+  <tbody>
+            @foreach(var item in Model)
+            {
+              <tr>
+                <td>@item.ItemName</td>
+                <td>@item.Quantity</td>
+                <td>
+                    <a asp-action="ManangeStock" asp-controller="Stock" asp-route-itemId="@item.ItemId" class="btn btn-info"> Update Stock</a>
+                </td>
+              </tr>
+            }
+  </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+    <script src="~/js/item-delete.js"></script>
+
+}

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shopping_Cart_2.Data;
 
@@ -11,9 +12,11 @@ using Shopping_Cart_2.Data;
 namespace Shopping_Cart_2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240525203105_m06")]
+    partial class m06
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,7 +249,7 @@ namespace Shopping_Cart_2.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("CartDetails", (string)null);
+                    b.ToTable("CartDetails");
                 });
 
             modelBuilder.Entity("Shopping_Cart_2.Models.Category", b =>
@@ -263,7 +266,7 @@ namespace Shopping_Cart_2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("categories", (string)null);
+                    b.ToTable("categories");
                 });
 
             modelBuilder.Entity("Shopping_Cart_2.Models.Item", b =>
@@ -295,7 +298,7 @@ namespace Shopping_Cart_2.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("items", (string)null);
+                    b.ToTable("items");
                 });
 
             modelBuilder.Entity("Shopping_Cart_2.Models.Order", b =>
@@ -350,7 +353,7 @@ namespace Shopping_Cart_2.Migrations
 
                     b.HasIndex("OrderStatusId");
 
-                    b.ToTable("Order", (string)null);
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("Shopping_Cart_2.Models.OrderDetail", b =>
@@ -379,7 +382,7 @@ namespace Shopping_Cart_2.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderDetail", (string)null);
+                    b.ToTable("OrderDetail");
                 });
 
             modelBuilder.Entity("Shopping_Cart_2.Models.OrderStatus", b =>
@@ -398,7 +401,7 @@ namespace Shopping_Cart_2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderStatus", (string)null);
+                    b.ToTable("OrderStatus");
                 });
 
             modelBuilder.Entity("Shopping_Cart_2.Models.ShoppingCart", b =>
@@ -418,7 +421,7 @@ namespace Shopping_Cart_2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShoppingCart", (string)null);
+                    b.ToTable("ShoppingCart");
                 });
 
             modelBuilder.Entity("Shopping_Cart_2.Models.Stock", b =>
@@ -440,7 +443,7 @@ namespace Shopping_Cart_2.Migrations
                     b.HasIndex("ItemId")
                         .IsUnique();
 
-                    b.ToTable("Stock", (string)null);
+                    b.ToTable("Stock");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -11,12 +11,15 @@ namespace Shopping_Cart_2.Models
         public string? Description { get; set; } = string.Empty;
         public double Price { get; set; } = 0;
         public string Cover {  get; set; } = string.Empty;
-        public int Quantity { get; set; }
+        [NotMapped]
+        public int Quantity { get; set; } = 0;
 
         //for M -> 1 items -> category  
         [ForeignKey(nameof(Category))]
         public int CategoryId { get; set; } = 0;
         public Category Category { get; set; } = default!;
+         
+        public Stock Stock { get; set; } = default!;
 
         // for M -> M
        // public ICollection<OrderItem> Orders { get; set; } = new List<OrderItem>();

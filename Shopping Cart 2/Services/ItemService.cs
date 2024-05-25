@@ -33,6 +33,7 @@ namespace Shopping_Cart_2.Services
         public IEnumerable<Item> GetAll()
         {
             var Item = _context.items.Include(x => x.Category)
+                                     .Include(x => x.Stock)
                                      .AsNoTracking()
                                      .ToList();
             return Item;
@@ -41,6 +42,7 @@ namespace Shopping_Cart_2.Services
         public Item? GetById(int id)
         {
             var Item = _context.items.Include(x => x.Category)
+                                     .Include(x=>x.Stock)
                                      //.Include(x => x.Orders)
                                      .AsNoTracking()
                                      .SingleOrDefault(g => g.Id == id);
@@ -58,7 +60,7 @@ namespace Shopping_Cart_2.Services
                 Price = vmItem.Price,
                 Cover = coverName,
                 CategoryId = vmItem.CategoryId,
-                Quantity = vmItem.Quantity,
+                
 
 
             };
@@ -78,7 +80,7 @@ namespace Shopping_Cart_2.Services
             item.Description = vmItem.Description;
             item.Price = vmItem.Price;
             item.CategoryId = vmItem.CategoryId;
-            item.Quantity = vmItem.Quantity;
+             
 
             //this for new cover
             var hasNewCover = vmItem.Cover is not null;

@@ -133,7 +133,10 @@ namespace Shopping_Cart_2.Services
             var shoppingCart = await _db.ShoppingCarts
                                   .Include(a => a.CartDetails)
                                   .ThenInclude(a => a.Item)
-                                  .ThenInclude(a => a.Category)
+                                  .ThenInclude(a=>a.Stock) // this for stock view
+                                  .Include(b => b.CartDetails)
+                                  .ThenInclude(b => b.Item)
+                                  .ThenInclude(b => b.Category)
                                   .Where(a => a.UserId == userId)
                                   .FirstOrDefaultAsync();
             return shoppingCart;
@@ -210,8 +213,20 @@ namespace Shopping_Cart_2.Services
                         UnitPrice = c.UnitPrice
                     };
                     await _db.OrderDetails.AddAsync(orderDetail);
-                }
-                await _db.SaveChangesAsync();
+
+                    //Update the stock here
+                    var stock = await _db.Stocks.FirstOrDefaultAsync(a => a.ItemId == c.ItemId);
+                    if(stock is null)
+                    {
+                        throw new InvalidOperationException("Stock is null");
+                    }
+                    if( c.Quantity > stock.Quantity)
+                    {
+                        throw new InvalidOperationException($"Only {stock.Quantity} items(s) are available in the stock");
+                    }
+                    // decrease the number of quantity from the stock table
+                    stock.Quantity -= c.Quantity;
+                } 
 
                 //6- removing the cartdetails
                 _db.CartDetails.RemoveRange(cartDetail);
