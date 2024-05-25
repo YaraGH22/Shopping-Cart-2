@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Hangfire.Server;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shopping_Cart_2.Data;
 using Shopping_Cart_2.Models;
@@ -24,7 +25,7 @@ namespace Shopping_Cart_2.Services
             return userId;
         }
         // get all orders for one user 
-        public async Task<IEnumerable<Order>> UserOrders()
+        public async Task<IEnumerable<Order>> UserOrders( )
         {
             var userId = GetUserId();
             if (string.IsNullOrEmpty(userId))
@@ -35,10 +36,14 @@ namespace Shopping_Cart_2.Services
                            .ThenInclude(x => x.Item)
                            .ThenInclude(x => x.Category)
                            .Where(a => a.UserId == userId)
-                           .ToListAsync();
-
+                           .ToListAsync(); 
             return orders;
         }
+        public async Task<Order?> GetOrderById(int id)
+        {
+            return await _db.Orders.FindAsync(id);
+        }
+
         public async Task<Order> GetOrderDetail(int orderId)
         {
             var userId = GetUserId();
@@ -51,6 +56,34 @@ namespace Shopping_Cart_2.Services
                            .Where(a => a.UserId == userId)
                            .SingleOrDefaultAsync(x => x.Id == orderId);
             return order;
+        }
+         
+        public async Task ChangeOrderStatus(UpdateOrderStatusModel data)
+        {
+            var order = await _db.Orders.FindAsync(data.OrderId);
+            if (order == null) throw new InvalidOperationException($"order within id:{data.OrderId} does not found");
+            order.OrderStatusId=data.OrderStatusId;
+            await _db.SaveChangesAsync();
+        }
+        public async Task TogglePaymentStatus(int orderId)
+        {
+            var order = await _db.Orders.FindAsync(orderId);
+            if (order == null)
+            {
+                throw new InvalidOperationException($"order within id:{orderId} does not found");
+            }
+            order.IsPaid = !order.IsPaid;
+            await _db.SaveChangesAsync();
+        }
+
+        public IEnumerable<SelectListItem> GetSelectLists()
+        {
+
+            return _db.orderStatuses.Select(os => new SelectListItem
+            {
+                Value = os.Id.ToString(),
+                Text = os.StatusName
+            }).ToList();
         }
     }
 }
