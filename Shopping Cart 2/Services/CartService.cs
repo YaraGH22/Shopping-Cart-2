@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Shopping_Cart_2.Constants;
-using Shopping_Cart_2.Data;
-using Shopping_Cart_2.Models;
-using System.Net;
+﻿
+
 
 namespace Shopping_Cart_2.Services
 {
@@ -133,7 +129,7 @@ namespace Shopping_Cart_2.Services
             var shoppingCart = await _db.ShoppingCarts
                                   .Include(a => a.CartDetails)
                                   .ThenInclude(a => a.Item)
-                                  .ThenInclude(a=>a.Stock) // this for stock view
+                                  .ThenInclude(a=>a.Stock) // this for stock view 
                                   .Include(b => b.CartDetails)
                                   .ThenInclude(b => b.Item)
                                   .ThenInclude(b => b.Category)

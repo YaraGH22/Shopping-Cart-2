@@ -9,12 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Shared\FileName.cshtml" />
     <Content Remove="Views\UserOrder\GetDetails.cshtml" />
     <Content Remove="wwwroot\js\item-delete.js" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\js\item-delete.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Views\Shared\FileName.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

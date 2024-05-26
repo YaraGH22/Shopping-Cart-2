@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Shopping_Cart_2.Models;
-using Shopping_Cart_2.Services;
-using System.Net;
-
-namespace Shopping_Cart_2.Controllers
+﻿namespace Shopping_Cart_2.Controllers
 {
     [Authorize]
     public class CartController : Controller

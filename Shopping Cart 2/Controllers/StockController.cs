@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Shopping_Cart_2.Data;
-using Shopping_Cart_2.Models;
-using Shopping_Cart_2.Services;
-
-namespace Shopping_Cart_2.Controllers
+﻿namespace Shopping_Cart_2.Controllers
 {
     public class StockController : Controller
     {

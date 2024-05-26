@@ -22,7 +22,8 @@ namespace Shopping_Cart_2.Services
         {
             //لانه list
             // اريد تحويلها 
-            var itemsWithStock =await _db.items.Include(x=>x.Stock)
+            var itemsWithStock =await _db.items
+                                         .Include(x=>x.Stock)
                                          .Select(i => new StockDisplayModel
                                          { 
                                              ItemId = i.Id, 

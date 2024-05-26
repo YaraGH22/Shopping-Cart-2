@@ -8,3 +8,8 @@ global using System.ComponentModel.DataAnnotations;
 global using Shopping_Cart_2.Models.DTO;
 global using Shopping_Cart_2.Models;
 global using Shopping_Cart_2.Constants;
+global using Microsoft.EntityFrameworkCore;
+global using Shopping_Cart_2.Data;
+global using Microsoft.AspNetCore.Mvc;
+global using Shopping_Cart_2.Services;
+global using Microsoft.AspNetCore.Authorization;

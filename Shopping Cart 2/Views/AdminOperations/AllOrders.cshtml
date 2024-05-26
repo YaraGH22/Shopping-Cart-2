@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<Order>
 @{
-     
+    Layout = "_AdminLayout";
     ViewData["Title"] = "AllOrders";
 }
 <div style="width:100%" class="mt-2">
     <h4> Orders</h4>
     @if (Model != null && Model.Count() > 0)
     {
-        <table class="table table-striped">
+        <table class="table table-striped" id="example">
+            <thead>
             <tr>
                 <th>OrderDate</th>
                 <th>Name</th>
@@ -19,6 +20,8 @@
                 <th>Actions</th>
 
             </tr>
+            </thead>
+            <tbody>
             @foreach (var order in Model)
             {
                 <tr>
@@ -45,6 +48,7 @@
                 </tr>
 
             }
+            </tbody>
         </table>
 
     }
@@ -55,3 +59,14 @@
 
 
 </div>
+
+@section Scripts
+              {
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+    <script src="~/js/item-delete.js"></script>
+
+}

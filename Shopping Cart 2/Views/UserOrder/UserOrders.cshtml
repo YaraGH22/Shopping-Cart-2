@@ -28,7 +28,7 @@
                         Total:
                     </td>
                     <td>
-                        @(order.OrderDetail.Select(item => item.Item.Price * item.Quantity).Sum()) $
+                        @(order.OrderDetail.Select(b => b.Item.Price * b.Quantity).Sum()) $
 
                     </td>
                 </tr>

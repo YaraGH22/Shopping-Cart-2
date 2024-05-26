@@ -73,5 +73,9 @@ namespace Shopping_Cart_2.Controllers
             }
             return RedirectToAction(nameof(AllOrders));
         }
+        public IActionResult Dashboard()
+        {
+            return View();
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿@model OrderDetailModalDTO
 
-
+@{
+     
+}
 <div class="modal" tabindex="-1" id="modal-@Model.DivId">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -17,14 +19,14 @@
                         <th>Quantiy</th>
                         <th>TotalPrice</th>
                     </tr>
-                    @foreach (var item in Model.OrderDetail)
+                    @foreach (var s in Model.OrderDetail)
                     {
                         <tr>
-                            <td>@item.Item.Name</td>
-                            <td>@item.Item.Category.Name</td>
-                            <td>@item.UnitPrice</td>
-                            <td>@item.Quantity</td>
-                            <td>@(item.Quantity * item.UnitPrice)</td>
+                            <td>@s.Item.Name</td>
+                            <td>@s.Item.Category.Name</td>
+                            <td>@s.UnitPrice</td>
+                            <td>@s.Quantity</td>
+                            <td>@(s.Quantity * s.UnitPrice)</td>
                         </tr>
                     }
                 </table>
