@@ -33,16 +33,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                       
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" onclick="auth()"  asp-controller="Items" asp-action="Index">Items</a>
+                        </li>
                         
                         @if (User.IsInRole(Shopping_Cart_2.Constants.Roles.Admin.ToString()))
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="AdminOperations" asp-action="Dashboard">Dashboard</a>
                             </li>
-                            @* <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Items" asp-action="Index">Items</a>
-                            </li>
+                            @* 
                              <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="AdminOperations" asp-action="AllOrders" >Orders</a>
                             </li>
@@ -91,6 +91,14 @@
                 console.log(err);
             }
         }
+    </script>
+
+    <script>
+        async function auth() {
+            var usernameEl = document.getElementById("username");
+            if (usernameEl == null) {
+                window.location.href = "/Identity/Account/Login";
+            }
     </script>
 
 

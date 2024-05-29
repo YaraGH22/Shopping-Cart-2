@@ -11,5 +11,8 @@ namespace Shopping_Cart_2.ViewModels
         [AllowedExtensions(FileSettings.AllowedExtensions)]
         [MaxFileSize(FileSettings.MaxFileSizeInBytes)]
         public IFormFile Cover { get; set; } = default!;
+        Stock Stock { get; set; } = default!;
+
+
     }
 }

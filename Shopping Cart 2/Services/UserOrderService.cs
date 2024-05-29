@@ -41,7 +41,7 @@ namespace Shopping_Cart_2.Services
         }
         public async Task<Order?> GetOrderById(int id)
         {
-            return await _db.Orders.FindAsync(id);
+            return await _db.Orders.SingleOrDefaultAsync(x=>x.Id==id);
         }
 
         public async Task<Order> GetOrderDetail(int orderId)

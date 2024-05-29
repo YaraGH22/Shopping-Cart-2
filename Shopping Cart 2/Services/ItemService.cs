@@ -1,5 +1,6 @@
 ﻿using Humanizer;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shopping_Cart_2.Data;
 using Shopping_Cart_2.Models;
@@ -12,12 +13,22 @@ namespace Shopping_Cart_2.Services
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly string _imagesPath;
-        public ItemService(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public ItemService(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
             _imagesPath = $"{_webHostEnvironment.WebRootPath}/assets/images/items";
-
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+        }
+        //retrieves the user ID associated with the currently authenticated user
+        private string GetUserId()
+        {
+            var principal = _httpContextAccessor.HttpContext.User; //currently authenticated user
+            string userId = _userManager.GetUserId(principal);
+            return userId;
         }
         private async Task<string> SaveCover(IFormFile cover)
         {
@@ -30,12 +41,27 @@ namespace Shopping_Cart_2.Services
 
             return coverName;
         }
-        public IEnumerable<Item> GetAll()
+        public  IEnumerable<Item> GetAll()
         {
+           
             var Item = _context.items.Include(x => x.Category)
                                      .Include(x => x.Stock)
                                      .AsNoTracking()
                                      .ToList();
+                                      
+            return Item;
+        } 
+        public  IEnumerable<Item> GetItemsByUserId()
+        {
+            var userId = GetUserId();
+            if (userId == null)
+                throw new InvalidOperationException("Invalid userid");
+            var Item = _context.items.Include(x => x.Category)
+                                     .Include(x => x.Stock)
+                                     .Where(x => x.UserId == userId)
+                                     .AsNoTracking()
+                                     .ToList();
+                                      
             return Item;
         }
 
@@ -49,9 +75,15 @@ namespace Shopping_Cart_2.Services
             return Item;
         }
 
-        public async Task Create(CreateItemVM vmItem)
+        public async Task Create(CreateItemVM vmItem , Stock st)
         {
+            var userId = GetUserId();
+            if (userId == null)
+                throw new InvalidOperationException("Invalid userid");
             var coverName = await SaveCover(vmItem.Cover);
+            // this for adding Quantity of item to Stock Table
+            st.Quantity = vmItem.Quantity;
+
 
             Item item = new()
             {
@@ -60,11 +92,20 @@ namespace Shopping_Cart_2.Services
                 Price = vmItem.Price,
                 Cover = coverName,
                 CategoryId = vmItem.CategoryId,
+                UserId = userId,
+                Stock = st
                 
-
 
             };
             await _context.items.AddAsync(item);
+
+            //Stock stock = new()
+            //{
+            //    Quantity = vmItem.Quantity,
+
+            //};
+            //await _context.Stocks.AddAsync(stock);
+
             await _context.SaveChangesAsync();
         }
 

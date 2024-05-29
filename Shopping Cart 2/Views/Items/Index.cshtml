@@ -2,7 +2,7 @@
 @model IEnumerable<Item>
 
 @{
-    Layout = "_AdminLayout";
+    
     ViewData["Title"] = "Item";
 }
 
@@ -25,6 +25,7 @@ else
             <thead>
                 <tr>
                     <th>Item</th>
+                    <th>UserId</th>
                     <th>Category</th>
                     <th>Image</th>
                     
@@ -36,6 +37,7 @@ else
                 {
                     <tr class="border-1 border-success " style="justify-content:center ">
                         <td>@g.Name</td>
+                        <td>@g.UserId</td>
                         <td>@g.Category.Name</td>
                         <td>
                             <div class="pe-4">

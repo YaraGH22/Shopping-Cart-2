@@ -17,7 +17,7 @@ namespace Shopping_Cart_2.Controllers
         }
         public IActionResult Index()
         {
-            var items=_itemService.GetAll();
+            var items = _itemService.GetItemsByUserId();
             return View(items);
         }
         public IActionResult Details(int id)
@@ -38,13 +38,13 @@ namespace Shopping_Cart_2.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CreateItemVM model)
+        public async Task<IActionResult> Create(CreateItemVM model , Stock stock)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            await _itemService.Create(model);
+            await _itemService.Create(model,stock);
             return RedirectToAction ("Index");
         }
         [HttpGet]

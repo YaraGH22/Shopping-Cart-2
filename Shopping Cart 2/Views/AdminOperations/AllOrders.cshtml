@@ -36,7 +36,7 @@
                         <button type="button" data-bs-toggle="modal" data-bs-target="#modal-@order.Id" class= "btn btn-primary">
                             Order-Detail
                         </button>
-                        <a asp-action="UpdateOrderStatus" asp-route-orderId="@order.Id" class="btn btn-info">Change Order Status</a>
+                            <a asp-action="UpdateOrderStatus" asp-route-orderId="@order.Id" class="btn btn-info">Change Order Status</a>
                         <a asp-action="TogglePaymentStatus" asp-route-orderId="@order.Id" class="btn btn-info">Toggle Payment Status</a>
 
               @* appending modal div here *@
