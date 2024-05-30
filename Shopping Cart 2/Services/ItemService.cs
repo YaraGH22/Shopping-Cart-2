@@ -46,6 +46,7 @@ namespace Shopping_Cart_2.Services
            
             var Item = _context.items.Include(x => x.Category)
                                      .Include(x => x.Stock)
+                                     .Where(x=>x.IsApproved == true)
                                      .AsNoTracking()
                                      .ToList();
                                       
@@ -93,19 +94,10 @@ namespace Shopping_Cart_2.Services
                 Cover = coverName,
                 CategoryId = vmItem.CategoryId,
                 UserId = userId,
-                Stock = st
-                
+                Stock = st 
 
             };
-            await _context.items.AddAsync(item);
-
-            //Stock stock = new()
-            //{
-            //    Quantity = vmItem.Quantity,
-
-            //};
-            //await _context.Stocks.AddAsync(stock);
-
+            await _context.items.AddAsync(item);  
             await _context.SaveChangesAsync();
         }
 

@@ -33,8 +33,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+
                         <li class="nav-item">
-                            <a class="nav-link text-dark" onclick="auth()"  asp-controller="Items" asp-action="Index">Items</a>
+                            <a class="nav-link text-dark" onclick="auth()"  asp-controller="Items" asp-action="Index">My Items</a>
                         </li>
                         
                         @if (User.IsInRole(Shopping_Cart_2.Constants.Roles.Admin.ToString()))

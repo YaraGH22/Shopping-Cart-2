@@ -2,7 +2,7 @@
 @model IEnumerable<Item>
 
 @{
-    
+
     ViewData["Title"] = "Item";
 }
 
@@ -47,12 +47,13 @@ else
                         <td> @g.IsApproved </td>
                         <td class="align-middle">
                             <div class="d-flex justify-content-end">
-                                <a class="btn btn-info rounded rounded-3 me-2" asp-action="Edit" asp-route-id="@g.Id">
+                                <a class="btn btn-info rounded rounded-3 me-2" asp-controller="Items" asp-action="Edit" asp-route-id="@g.Id">
                                     <i class="bi bi-pencil-fill"></i>
                                 </a>
-                                <a class="btn btn-danger rounded rounded-3 js-delete" data-id="@g.Id">
+                                <a class="btn btn-danger rounded rounded-3 js-delete  me-2" data-id="@g.Id">
                                     <i class="bi bi-trash3"></i>
                                 </a>
+                                <a asp-action="ToggleApprovementStatus" asp-route-ItemId="@g.Id" class="btn btn-info rounded rounded-3 me-2"> Toggle Approvement Status</a>
                             </div>
                         </td>
                     </tr>

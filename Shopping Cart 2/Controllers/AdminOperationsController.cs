@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shopping_Cart_2.Constants;
 using Shopping_Cart_2.Data;
+using Shopping_Cart_2.Models;
 using Shopping_Cart_2.Services;
 
 namespace Shopping_Cart_2.Controllers
@@ -10,10 +11,12 @@ namespace Shopping_Cart_2.Controllers
     public class AdminOperationsController : Controller
     {
         private readonly IUserOrderService _userOrderService;
+        private readonly IManageItemService _manageItemService;
 
-        public AdminOperationsController(IUserOrderService userOrderService)
+        public AdminOperationsController(IUserOrderService userOrderService, IManageItemService manageItemService)
         {
             _userOrderService = userOrderService;
+            _manageItemService = manageItemService;
         }
 
 
@@ -76,6 +79,25 @@ namespace Shopping_Cart_2.Controllers
         public IActionResult Dashboard()
         {
             return View();
+        }
+
+        public async Task <IActionResult> ToggleApprovementStatus(int ItemId)
+        {
+            try
+            {
+                await _manageItemService.ToggleApprovementStatus(ItemId);
+            }
+            catch (Exception ex)
+            {
+                // log exception here
+            }
+            return RedirectToAction(nameof(GetAllItems));
+             
+        }
+        public async Task <IActionResult> GetAllItems()
+        {
+            var items = await _manageItemService.GetAllItems();
+            return View(items);
         }
     }
 }
