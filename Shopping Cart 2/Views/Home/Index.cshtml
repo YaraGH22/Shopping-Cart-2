@@ -6,10 +6,19 @@
     ViewData["Titles"] = "Home Page";
 
 }
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-subheading">Welcome To Our Studio!</div>
+        <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>
+        <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>
+    </div>
+</header>
+
 
 @if (!Model.Any())
 {
-    <div class="alert alert-warning mt-5">
+    <div class="container alert alert-warning mt-5">
 
         <h4 class="alert-heading ">No items !</h4>
         <p class="mb-0">No items were added yet..</p>
@@ -19,7 +28,7 @@
 else
 {
     // search
-    <div  >
+    <div class="container">
         <form asp-controller="Home" asp-action="Index" class="d-flex ">
             <input name="seachName" class="form-control me-2  " type="search" placeholder="Search" aria-label="Search"
                    value="@ViewBag.seachName">
