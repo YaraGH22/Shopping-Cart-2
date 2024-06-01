@@ -19,9 +19,10 @@ namespace Shopping_Cart_2.Controllers
             _ratingService = ratingService;
             _userService = userService;
         }
+        [Authorize]
         public IActionResult Index()
         {
-            var items = _itemService.GetItemsByUserId();
+            var items = _itemService.GetItemsByUserId(); 
             return View(items);
         }
         public IActionResult Details(int itemId)

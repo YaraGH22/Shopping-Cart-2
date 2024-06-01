@@ -56,7 +56,8 @@ namespace Shopping_Cart_2.Services
         {
             var userId = GetUserId();
             if (userId == null)
-                throw new InvalidOperationException("Invalid userid");
+                throw new UnauthorizedAccessException("user is not logged-in");
+
             var Item = _context.items.Include(x => x.Category)
                                      .Include(x => x.Stock)
                                      .Where(x => x.UserId == userId)
