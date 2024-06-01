@@ -21,6 +21,7 @@ namespace Shopping_Cart_2.Data
         public DbSet<OrderStatus> orderStatuses { get; set; }
 
         public DbSet<Stock> Stocks { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

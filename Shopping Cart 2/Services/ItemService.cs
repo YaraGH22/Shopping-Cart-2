@@ -106,6 +106,7 @@ namespace Shopping_Cart_2.Services
             // 4-  خدمة تعديل تجلب غرض اساسي من داتاسيت 
             // ثم تسند (البارمتر) الغرض الوسيط الى الاساسي 
             var item = await _context.items.Include(g => g.Category)
+                                            .Include(x=> x.Stock)
                                            .SingleOrDefaultAsync(g => g.Id == vmItem.Id);
             if (item == null) return null;
 
@@ -113,6 +114,7 @@ namespace Shopping_Cart_2.Services
             item.Description = vmItem.Description;
             item.Price = vmItem.Price;
             item.CategoryId = vmItem.CategoryId;
+            item.Stock.Quantity = vmItem.Quantity;
              
 
             //this for new cover

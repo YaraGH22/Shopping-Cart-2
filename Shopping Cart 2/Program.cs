@@ -17,6 +17,8 @@ builder.Services.AddTransient<ICartService, CartService>();
 builder.Services.AddTransient<IUserOrderService, UserOrderService>();
 builder.Services.AddTransient<IStockService, StockService>();
 builder.Services.AddTransient<IManageItemService, ManageItemService>();
+builder.Services.AddTransient<IRatingService, RatingService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 builder.Services
     .AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)

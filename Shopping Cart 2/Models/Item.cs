@@ -26,7 +26,7 @@ namespace Shopping_Cart_2.Models
 
         // for M -> M
        // public ICollection<OrderItem> Orders { get; set; } = new List<OrderItem>();
-
+        public List<Rating> Ratings { get; set; } = new List<Rating>();
         public List<OrderDetail> OrderDetail { get; set; } = new List<OrderDetail>();
         public List<CartDetail> CartDetail { get; set; } = new List<CartDetail>();
 
