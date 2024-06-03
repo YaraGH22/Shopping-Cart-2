@@ -20,11 +20,7 @@
     },
     {
       "library": "bootstrap@5.3.3",
-      "destination": "wwwroot/css/bootstrap/",
-      "files": [
-        "css/bootstrap.min.css",
-        "js/bootstrap.min.js"
-      ]
+      "destination": "wwwroot/lib/bootstrap/"
     }
   ]
 }

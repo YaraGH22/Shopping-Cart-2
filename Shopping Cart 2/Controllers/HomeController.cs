@@ -19,7 +19,12 @@ namespace Shopping_Cart_2.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string? seachName, string? categoryName)
+        public async Task<IActionResult> Index()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Products(string? seachName, string? categoryName)
         {
             var item = _itemService.GetAll();
             //Searching
@@ -28,7 +33,7 @@ namespace Shopping_Cart_2.Controllers
                 item = item.Where(g => g.Name.ToLower().Contains(seachName.ToLower())
                     || g.Description.ToLower().Contains(seachName.ToLower())).ToList();
             }
-             
+
             //Filtering
             else if (categoryName != null)
             {
@@ -37,6 +42,7 @@ namespace Shopping_Cart_2.Controllers
             ViewBag.seachName = seachName;
             ViewBag.categories = _context.categories.ToList();
             return View(item);
+        
         }
 
         public IActionResult Privacy()
