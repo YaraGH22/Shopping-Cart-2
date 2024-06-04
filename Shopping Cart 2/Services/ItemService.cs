@@ -15,13 +15,15 @@ namespace Shopping_Cart_2.Services
         private readonly string _imagesPath;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public ItemService(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
+        private readonly IRatingService _ratingService;
+        public ItemService(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor, IRatingService ratingService)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
             _imagesPath = $"{_webHostEnvironment.WebRootPath}/assets/images/items";
             _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
+            _ratingService = ratingService;
         }
         //retrieves the user ID associated with the currently authenticated user
         private string GetUserId()
@@ -46,10 +48,17 @@ namespace Shopping_Cart_2.Services
            
             var Item = _context.items.Include(x => x.Category)
                                      .Include(x => x.Stock)
+                                     .Include(x=>x.Ratings)
                                      .Where(x=>x.IsApproved == true)
                                      .AsNoTracking()
                                      .ToList();
-                                      
+            //for average product rate  // 
+            foreach (var d in Item)
+            {
+
+                d.ProductAverageRate = _ratingService.GetProductRate(d.Id);
+
+            }
             return Item;
         } 
         public  IEnumerable<Item> GetItemsByUserId()
@@ -60,6 +69,7 @@ namespace Shopping_Cart_2.Services
 
             var Item = _context.items.Include(x => x.Category)
                                      .Include(x => x.Stock)
+                                     .Include(x=>x.Ratings)
                                      .Where(x => x.UserId == userId)
                                      .AsNoTracking()
                                      .ToList();
@@ -71,6 +81,7 @@ namespace Shopping_Cart_2.Services
         {
             var Item = _context.items.Include(x => x.Category)
                                      .Include(x=>x.Stock)
+                                     .Include(x=>x.Ratings)
                                      //.Include(x => x.Orders)
                                      .AsNoTracking()
                                      .SingleOrDefault(g => g.Id == id);

@@ -4,6 +4,7 @@ using Shopping_Cart_2.Data;
 using Shopping_Cart_2.Models;
 using Shopping_Cart_2.Services;
 using System.Diagnostics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Shopping_Cart_2.Controllers
 {
@@ -12,11 +13,13 @@ namespace Shopping_Cart_2.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly IItemService _itemService;
+         
         public HomeController(ILogger<HomeController> logger, IItemService itemService, ApplicationDbContext context )
         {
             _logger = logger;
             _itemService = itemService;
             _context = context;
+             
         }
 
         public async Task<IActionResult> Index()
@@ -24,9 +27,10 @@ namespace Shopping_Cart_2.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Products(string? seachName, string? categoryName)
+        public async Task<IActionResult> Products(string? seachName, string? categoryName )
         {
             var item = _itemService.GetAll();
+
             //Searching
             if (!string.IsNullOrEmpty(seachName))
             {
@@ -41,6 +45,7 @@ namespace Shopping_Cart_2.Controllers
             }
             ViewBag.seachName = seachName;
             ViewBag.categories = _context.categories.ToList();
+              
             return View(item);
         
         }

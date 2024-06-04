@@ -15,6 +15,7 @@ namespace Shopping_Cart_2.Models
         public bool IsApproved { get; set; }=false;
         [Required]
         public string UserId { get; set; } =string.Empty;
+        public double ProductAverageRate { get; set; } = 0;
 
         //for M -> 1 items -> category  
         [ForeignKey(nameof(Category))]

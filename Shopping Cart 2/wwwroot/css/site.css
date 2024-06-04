@@ -72,12 +72,14 @@ footer {
         color: #ffd700;
     }
 
+@media(max-width: 500px){
 
+}
 /*Hero section*/
 .hero {
     padding-top: 10.5rem;
     padding-bottom: 6rem;
-    background-image: url("../assets/img/bg/bg (6).jpg");
+    background-image: url("../assets/img/bg/bg (4).jpg");
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-position: center center;
@@ -90,21 +92,21 @@ footer {
     }
 }
     /*form all section*/
-    .page-section {
+ .page-section {
         padding: 4rem 0;
     }
 
-        .page-section div div {
+ .page-section div div {
             padding-top: 45px;
         }
 
-        .page-section h2.section-heading, .page-section .section-heading.h2 {
+ .page-section h2.section-heading, .page-section .section-heading.h2 {
             font-size: 2.5rem;
             margin-top: 0;
             margin-bottom: 1rem;
         }
 
-        .page-section h3.section-subheading, .page-section .section-subheading.h3 {
+ .page-section h3.section-subheading, .page-section .section-subheading.h3 {
             font-size: 1rem;
             font-weight: 400;
             font-style: italic;
@@ -112,14 +114,14 @@ footer {
             margin-bottom: 4rem;
         }
 
-    @media (min-width: 768px) 
+ @media (min-width: 768px) 
     {
         section {
             padding: 4rem 0;
         }
     }
 
-    .btn-social {
+ .btn-social {
         height: 2.5rem;
         width: 2.5rem;
         display: inline-flex;
@@ -128,15 +130,15 @@ footer {
         padding: 0;
         border-radius: 100%;
     }
-    /* this for About Section*/
+ /* this for About Section*/
 
-    .timeline {
+ .timeline {
         position: relative;
         padding: 0;
         list-style: none;
     }
 
-        .timeline:before {
+ .timeline:before {
             position: absolute;
             top: 0;
             bottom: 0;
@@ -147,22 +149,21 @@ footer {
             background-color: #e9ecef;
         }
 
-        .timeline > li {
+ .timeline > li {
             position: relative;
             min-height: 50px;
             margin-bottom: 50px;
         }
 
-            .timeline > li:after, .timeline > li:before {
+  .timeline > li:after, .timeline > li:before {
                 display: table;
                 content: " ";
             }
 
-            .timeline > li:after {
+ .timeline > li:after {
                 clear: both;
             }
-
-            .timeline > li .timeline-panel {
+ .timeline > li .timeline-panel {
                 position: relative;
                 float: right;
                 width: 100%;
@@ -170,7 +171,7 @@ footer {
                 text-align: left;
             }
 
-                .timeline > li .timeline-panel:before {
+ .timeline > li .timeline-panel:before {
                     right: auto;
                     left: -15px;
                     border-right-width: 15px;
@@ -426,11 +427,25 @@ section#contact {
 
 
 /*search*/
-.search{
-    width:fit-content;
+.search {
+    width: fit-content;
+    margin-bottom: 30px;
+}
+@media (max-width: 600px) {
+    .ser2 {
+        width: 100%;
+    }
 }
 /*filter*/
 .cat {
     padding: 5px;
     margin: 5px;
 }
+
+
+
+
+
+
+
+

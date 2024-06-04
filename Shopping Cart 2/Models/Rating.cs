@@ -6,6 +6,7 @@ namespace Shopping_Cart_2.Models
     {
         public int Id { get; set; }
         public int RatingValue { get; set; }
+        
         public DateTime ReviewDate { get; set; } = DateTime.Now;
         public string UserId { get; set; }  
         [ForeignKey("Item")]
