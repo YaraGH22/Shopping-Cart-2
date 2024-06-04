@@ -5,7 +5,8 @@ namespace Shopping_Cart_2.ViewModels
     public class CreateOrderVM
     {
         public int Id { get; set; }
-        public decimal TotalPrice { get; set; } = 0;
+        
+        
         public int Quantity { get; set; }
         
 

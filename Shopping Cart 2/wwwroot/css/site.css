@@ -2,8 +2,8 @@
     font-family: "Merriweather Sans", sans-serif;
 }
 
+ 
 html {
-    html {
   font-size: 14px;
 }
 
@@ -30,16 +30,18 @@ body {
 }
 
 footer {
-   /* position: fixed;*/
+    /*position: fixed;*/ 
     bottom: 0;
     left: 0;
     width: 100%;
+    background-color: inherit;
 }
 
 
 /* Start Custom Styles */
 .cover-preview {
     max-height: 500px;
+   /* max-height:500px;*/
     border-radius: 8px;
 }
 /* End Custom Styles */
@@ -443,8 +445,20 @@ section#contact {
 }
 
 
+ /*Item View*/
 
+/*Index*/
+.add-bt {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
 
+.ptable {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: xx-large;
+
+}
 
 
 

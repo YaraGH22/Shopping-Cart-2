@@ -6,6 +6,7 @@ namespace Shopping_Cart_2.Models
     public class Stock
     {
         public int Id { get; set; }
+        [Required]
         public int Quantity { get; set; } = 0;
          
         [ForeignKey(nameof(Item))]
