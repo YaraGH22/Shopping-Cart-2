@@ -46,21 +46,26 @@
                             <a class="nav-link" asp-controller="AdminOperations" asp-action="Dashboard">Admin Dashboard</a>
                         </li>
                     }
+                      
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Seller DashBord
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/UserOrder/UserOrders">My Orders</a></li>
+                            
                             <li><a class="dropdown-item" asp-controller="Items" asp-action="Index">My Products</a></li>
                             <li><a class="dropdown-item" asp-controller="Stock" asp-action="Index">Manage Stock</a></li> 
                              
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="UserOrder" asp-action="UserOrders">Track Order </a>
+                    </li> 
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    @* <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li> 
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li> *@ 
                 </ul> 
                 <partial name="_LoginPartial" />
             </div>

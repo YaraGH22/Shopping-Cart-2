@@ -1,5 +1,6 @@
 ﻿namespace Shopping_Cart_2.Controllers
 {
+    [Authorize]
     public class StockController : Controller
     {
         private readonly IStockService _stockService;
