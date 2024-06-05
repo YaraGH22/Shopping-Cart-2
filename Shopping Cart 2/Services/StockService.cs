@@ -6,9 +6,11 @@ namespace Shopping_Cart_2.Services
     public class StockService : IStockService
     {
         private readonly ApplicationDbContext _db;
-        public StockService(ApplicationDbContext db)
+        private readonly IUserService _userService;
+        public StockService(ApplicationDbContext db, IUserService userService)
         {
             _db = db;
+            _userService = userService;
         }
 
         public async Task<Stock?> GetStockByItemId(int itemId) 
@@ -20,10 +22,15 @@ namespace Shopping_Cart_2.Services
 
         public async Task<IEnumerable<StockDisplayModel>> GetStocks( )
         {
+
+            var userId = _userService.GetUserId();
+            if (userId == null)
+                throw new UnauthorizedAccessException("user is not logged-in");
             //لانه list
             // اريد تحويلها 
             var itemsWithStock =await _db.items
                                          .Include(x=>x.Stock)
+                                         .Where(x => x.UserId == userId)
                                          .Select(i => new StockDisplayModel
                                          { 
                                              ItemId = i.Id, 
