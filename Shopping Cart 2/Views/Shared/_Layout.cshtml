@@ -39,14 +39,7 @@
                     <li class="nav-item">
                         <a class="nav-link " asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Products">Products</a></li>
-                    @if (User.IsInRole(Shopping_Cart_2.Constants.Roles.Admin.ToString()))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="AdminOperations" asp-action="Dashboard">Admin Dashboard</a>
-                        </li>
-                    }
-                      
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Products">Products</a></li> 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Seller DashBord
@@ -62,6 +55,12 @@
                         <a class="nav-link" asp-controller="UserOrder" asp-action="UserOrders">Track Order </a>
                     </li> 
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    @if (User.IsInRole(Shopping_Cart_2.Constants.Roles.Admin.ToString()))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="AdminOperations" asp-action="Dashboard">Admin Dashboard</a>
+                        </li>
+                    }
                     @* <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>

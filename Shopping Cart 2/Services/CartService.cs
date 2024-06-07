@@ -144,6 +144,10 @@ namespace Shopping_Cart_2.Services
                 userId = GetUserId();
             } 
             var sh = await _db.ShoppingCarts.Include(x=>x.CartDetails).SingleOrDefaultAsync(x => x.UserId == userId);
+            if (sh == null)
+            {
+                return 0;
+            }
             var data = sh.CartDetails.Sum(x => x.Quantity);
 
             //var totalQuantity = await (from cart in _db.ShoppingCarts

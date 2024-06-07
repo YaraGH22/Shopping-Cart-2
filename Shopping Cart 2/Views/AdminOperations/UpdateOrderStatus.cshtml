@@ -5,7 +5,7 @@
 }
 
 <h2>Update order status</h2>
-<a class="my-2 btn btn-primary" asp-action="AllOrders">Back</a>
+<a class="my-2 btn btn-dark " asp-action="AllOrders">Back</a>
 
 <form style="width: 50%;" asp-action="UpdateOrderStatus" class="pt-2">
 
@@ -18,7 +18,7 @@
         </select>
         <span class="text-danger" asp-validation-for="OrderStatusId"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Update</button>
+    <button type="submit" class="btn btn-dark ">Update</button>
 
     @if (TempData["msg"] != null)
     {

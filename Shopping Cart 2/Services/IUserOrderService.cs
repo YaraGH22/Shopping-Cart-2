@@ -13,5 +13,6 @@ namespace Shopping_Cart_2.Services
         Task ChangeOrderStatus(UpdateOrderStatusModel data);
         Task TogglePaymentStatus(int orderId);
          IEnumerable<SelectListItem> GetSelectLists();
+        Task<IEnumerable<Order>> AllOrders();
     }
 }

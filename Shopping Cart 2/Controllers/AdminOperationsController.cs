@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Shopping_Cart_2.Constants;
 using Shopping_Cart_2.Data;
 using Shopping_Cart_2.Models;
@@ -11,18 +13,19 @@ namespace Shopping_Cart_2.Controllers
     public class AdminOperationsController : Controller
     {
         private readonly IUserOrderService _userOrderService;
-        private readonly IManageItemService _manageItemService;
-
-        public AdminOperationsController(IUserOrderService userOrderService, IManageItemService manageItemService)
+        private readonly IManageItemService _manageItemService; 
+        public AdminOperationsController(IUserOrderService userOrderService, IManageItemService manageItemService )
         {
             _userOrderService = userOrderService;
             _manageItemService = manageItemService;
+             
+            
         }
 
 
         public async Task<IActionResult> AllOrders()
         {
-            var orders = await _userOrderService.UserOrders();
+            var orders = await _userOrderService.AllOrders();
             return View(orders);
         }
 
@@ -99,5 +102,9 @@ namespace Shopping_Cart_2.Controllers
             var items = await _manageItemService.GetAllItems();
             return View(items);
         }
+        
+
+         
+
     }
 }

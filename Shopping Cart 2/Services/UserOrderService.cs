@@ -39,6 +39,16 @@ namespace Shopping_Cart_2.Services
                            .ToListAsync(); 
             return orders;
         }
+        public async Task<IEnumerable<Order>> AllOrders()
+        {
+            var orders = await _db.Orders
+                          .Include(x => x.OrderStatus)
+                          .Include(x => x.OrderDetail)
+                          .ThenInclude(x => x.Item)
+                          .ThenInclude(x => x.Category) 
+                          .ToListAsync();
+            return orders;
+        }
         public async Task<Order?> GetOrderById(int id)
         {
             return await _db.Orders.SingleOrDefaultAsync(x=>x.Id==id);
